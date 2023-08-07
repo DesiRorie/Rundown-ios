@@ -9,9 +9,19 @@ import SwiftUI
 
 @main
 struct RunDownApp: App {
+    @AppStorage("isOnboarding") var isOnboarding:Bool = true
+    @AppStorage("isDarkMode") var isDarkMode:Bool = false
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if isOnboarding{
+                ContentView()
+                   
+            }
+            else {
+                HomeView()
+                    .preferredColorScheme(isDarkMode ? .dark : .light)
+            }
+            
         }
     }
 }

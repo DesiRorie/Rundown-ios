@@ -8,12 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("isOnboarding") var isOnboarding:Bool?
+    @State var opacityState:Bool = false
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("Rundown").font(.largeTitle)
+                .opacity(opacityState ? 1 : 0)
+                .animation(.easeOut(duration: 2), value: opacityState)
+        }
+        .onAppear{
+            Task{
+                withAnimation {
+                    opacityState = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        isOnboarding = false
+                    }
+                }
+            }
         }
         .padding()
     }
